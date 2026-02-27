@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'; // fixed import
 import { X } from 'lucide-react';
 import { createOrder } from '../services/api';
 import { toast } from 'sonner';
+import { getWillaya } from '../services/api'; // ← import getWillaya for fetching wilayas
 
 export function OrderModal({
   isOpen,
@@ -31,10 +32,7 @@ export function OrderModal({
     if (isOpen) {
       const fetchWilayas = async () => {
         try {
-          const response = await fetch('http://localhost:5000/api/shipping-wilayas');
-          if (!response.ok) throw new Error('Failed to load wilayas');
-          const data = await response.json();
-          // Assuming it returns array of strings or [{name: "..."}, ...]
+          const data = await getWillaya(); // Using the custom getWillaya API function
           const list = Array.isArray(data)
             ? data.map(item => typeof item === 'string' ? item : item.name || item)
             : [];
@@ -42,14 +40,19 @@ export function OrderModal({
         } catch (err) {
           console.error(err);
           toast.error('Impossible de charger la liste des wilayas', {
-            style: { background: '#1A1A1A', color: '#E8DCCB', border: '1px solid #8B0000' },
+            style: {
+              background: '#1A1A1A',
+              color: '#E8DCCB',
+              border: '1px solid #8B0000',
+            },
           });
           // Fallback to hardcoded minimal list if needed
-          setWilayas(['Alger', 'Oran', 'Constantine', 'Blida', /* ... */]);
+          setWilayas(['Alger', 'Oran', 'Constantine', 'Blida']);
         } finally {
           setWilayasLoading(false);
         }
       };
+
       fetchWilayas();
     }
   }, [isOpen]);
