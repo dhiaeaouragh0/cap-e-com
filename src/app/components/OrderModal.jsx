@@ -18,7 +18,7 @@ export function OrderModal({
     customerEmail: '',
     wilaya: '',
     address: '',
-    deliveryType: 'domicile', // default
+    deliveryType: 'domicile', 
     note: '',
     quantity: initialQuantity,
   });
@@ -271,7 +271,7 @@ export function OrderModal({
                         className="w-full bg-[#0E0E0E] border border-[#E8DCCB]/30 px-4 py-3 text-[#E8DCCB] focus:border-[#8B0000] outline-none transition"
                       >
                         <option value="domicile">À domicile</option>
-                        <option value="bureau">Point relais / Bureau</option>
+                        <option value="agence">Point relais / Bureau</option>
                         {/* Add more if your backend supports */}
                       </select>
                     </div>
